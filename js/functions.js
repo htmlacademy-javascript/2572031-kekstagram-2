@@ -1,8 +1,5 @@
 function lengthCheck (string, len) {
-  if (string.length <= len){
-    return true;
-  }
-  return false;
+  return string.length >= len;
 }
 
 lengthCheck('проверяемая строка', 20);
@@ -21,7 +18,10 @@ palidromeCheck ('Кекс');
 palidromeCheck ('Лёша на полке клопа нашёл ');
 
 function findDigit (string) {
-  string += '';
+  if (typeof string === 'number') {
+    string = string.toString();
+  }
+
   let result = '';
 
   for (let i = 0; i < string.length; i++) {
