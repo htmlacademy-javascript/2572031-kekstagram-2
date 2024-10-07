@@ -4,8 +4,6 @@ import {messageText, firstNames, lastNames, photoDescriptions} from './constants
 let commentIdCounter = 1;
 let photoIdCounter = 1;
 
-
-
 function getMessage (text) {
   let result = String();
   const formattedText = text.split(RegExp('[.!]'));
@@ -44,7 +42,7 @@ function generatePhoto () {
 }
 
 function generatePhotosArray (len) {
-  return Array.from({length: len}, generatePhoto)
+  return Array.from({length: len}, generatePhoto);
 }
 
 export {generatePhotosArray};
