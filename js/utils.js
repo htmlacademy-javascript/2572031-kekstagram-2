@@ -9,4 +9,4 @@ function getRandomItem (arr){
     return arr[getRandomInteger(0,arr.length - 1)]
 }
 
-export {getRandomInteger, getRandomItem}
+export {getRandomInteger, getRandomItem};

@@ -3,4 +3,4 @@ const firstNames = ['Антон', 'Василий', 'Петр', 'Кирилл', 
 const lastNames = ['Иванов', 'Сидоров', 'Петров', 'Кузнецов', 'Семенов', 'Джаваскриптов'];
 const photoDescriptions = ['Космические линии', 'Игра света и тени', 'Цветовые пятна', 'Энергия движения', 'Сложные узоры', 'Необычные формы', 'Гармония цвета', 'Размытые контуры', 'Природные текстуры', 'Загадочный силуэт'];
 
-export {messageText, firstNames, lastNames, photoDescriptions}
+export {messageText, firstNames, lastNames, photoDescriptions};

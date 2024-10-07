@@ -1,5 +1,5 @@
-import {getRandomInteger,getRandomItem} from './utils.js'
-import {messageText, firstNames, lastNames, photoDescriptions} from './constants.js'
+import {getRandomInteger,getRandomItem} from './utils.js';
+import {messageText, firstNames, lastNames, photoDescriptions} from './constants.js';
 
 let commentIdCounter = 1;
 let photoIdCounter = 1;
@@ -43,8 +43,8 @@ function generatePhoto () {
   };
 }
 
-function generatePhotosArray () {
-  return Array.from({length: 25}, generatePhoto)
+function generatePhotosArray (len) {
+  return Array.from({length: len}, generatePhoto)
 }
 
-export {generatePhotosArray}
+export {generatePhotosArray};

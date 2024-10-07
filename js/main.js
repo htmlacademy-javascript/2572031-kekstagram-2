@@ -1,3 +1,3 @@
-import {generatePhotosArray} from './generate-photos-array.js'
+import {generatePhotosArray} from './generate-photos-array.js';
 
-console.log(generatePhotosArray())
+console.log(generatePhotosArray());
