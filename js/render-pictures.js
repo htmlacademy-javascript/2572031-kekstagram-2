@@ -17,7 +17,7 @@ function renderPictures(arr){
   const picturesContainer = document.querySelector('.pictures');
   const fragment = document.createDocumentFragment();
 
-  arr.forEach((picture) => fragment.appendChild(makePicture(picture)));
+  arr.forEach((obj) => fragment.appendChild(makePicture(obj)));
   picturesContainer.appendChild(fragment);
 }
 
