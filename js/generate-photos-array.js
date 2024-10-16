@@ -37,7 +37,7 @@ function generatePhoto () {
     url: `photos/${getRandomInteger(1,25)}.jpg`,
     decription: getPhotoDescription(),
     likes: getRandomInteger(15,200),
-    comments: Array.from({length: getRandomInteger(0,5)}, generateComment)
+    comments: Array.from({length: getRandomInteger(0,15)}, generateComment)
   };
 }
 
