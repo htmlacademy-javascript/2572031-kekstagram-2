@@ -7,9 +7,9 @@ function makePicture(object){
   img.src = object.url;
   img.alt = object.decription;
   const likesAmount = picture.querySelector('.picture__likes');
-  likes.textContent = object.likes;
+  likesAmount.textContent = object.likes;
   const commentsAmount = picture.querySelector('.picture__comments');
-  comments.textContent = object.comments.length;
+  commentsAmount.textContent = object.comments.length;
   return picture;
 }
 
