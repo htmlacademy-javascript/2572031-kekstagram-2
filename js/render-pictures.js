@@ -1,15 +1,15 @@
 const pictureTemplate = document.querySelector('#picture').content;
 
 
-function makePicture(arr){
+function makePicture(object){
   const picture = pictureTemplate.querySelector('.picture').cloneNode(true);
   const img = picture.querySelector('.picture__img');
-  img.src = arr.url;
-  img.alt = arr.decription;
-  const likes = picture.querySelector('.picture__likes');
-  likes.textContent = arr.likes;
-  const comments = picture.querySelector('.picture__comments');
-  comments.textContent = arr.comments.length;
+  img.src = object.url;
+  img.alt = object.decription;
+  const likesAmount = picture.querySelector('.picture__likes');
+  likes.textContent = object.likes;
+  const commentsAmount = picture.querySelector('.picture__comments');
+  comments.textContent = object.comments.length;
   return picture;
 }
 

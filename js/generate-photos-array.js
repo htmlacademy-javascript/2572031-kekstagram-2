@@ -2,7 +2,7 @@ import {getRandomInteger,getRandomItem} from './utils.js';
 import {messageText, firstNames, lastNames, photoDescriptions} from './constants.js';
 
 let commentIdCounter = 1;
-let photoIdCounter = 1;
+let photoIdCounter = 0;
 
 function getMessage (text) {
   let result = String();
@@ -33,8 +33,8 @@ function generateComment () {
 
 function generatePhoto () {
   return {
-    id: photoIdCounter++,
-    url: `photos/${getRandomInteger(1,25)}.jpg`,
+    id: ++photoIdCounter,
+    url: `photos/${photoIdCounter}.jpg`,
     decription: getPhotoDescription(),
     likes: getRandomInteger(15,200),
     comments: Array.from({length: getRandomInteger(0,15)}, generateComment)
