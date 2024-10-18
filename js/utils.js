@@ -9,4 +9,8 @@ function getRandomItem (arr){
   return arr[getRandomInteger(0,arr.length - 1)];
 }
 
-export {getRandomInteger, getRandomItem};
+function findImage (arr, src) {
+  return arr.find((item) => item.url === src);
+}
+
+export {getRandomInteger, getRandomItem, findImage};
