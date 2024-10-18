@@ -10,7 +10,7 @@ function getRandomItem (arr){
 }
 
 function findImage (arr, src) {
-  return arr.find(item => item.url == src)
+  return arr.find((item) => item.url === src);
 }
 
 export {getRandomInteger, getRandomItem, findImage};
