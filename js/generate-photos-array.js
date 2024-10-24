@@ -1,15 +1,14 @@
 import {getRandomInteger,getRandomItem} from './utils.js';
-import {messageText, firstNames, lastNames, photoDescriptions} from './constants.js';
+import {messages, firstNames, lastNames, photoDescriptions} from './constants.js';
 
 let commentIdCounter = 1;
 let photoIdCounter = 0;
 
-function getMessage (text) {
+function getMessage (textArray) {
   let result = String();
-  const formattedText = text.split(RegExp('[.!]'));
 
   for (let i = 0; i < getRandomInteger(1,2); i++) {
-    result += `${getRandomItem(formattedText).trim()}.`;
+    result += `${getRandomItem(textArray).trim()}`;
   }
   return result;
 }
@@ -26,7 +25,7 @@ function generateComment () {
   return {
     id: commentIdCounter++,
     avatar: `img/avatar-${getRandomInteger(1,6)}.svg`,
-    message: getMessage(messageText),
+    message: getMessage(messages),
     name: getFullName()
   };
 }
