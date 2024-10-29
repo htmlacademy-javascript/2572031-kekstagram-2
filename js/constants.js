@@ -11,5 +11,42 @@ const lastNames = ['Иванов', 'Сидоров', 'Петров', 'Кузне
 const photoDescriptions = ['Космические линии', 'Игра света и тени', 'Цветовые пятна', 'Энергия движения', 'Сложные узоры', 'Необычные формы', 'Гармония цвета', 'Размытые контуры', 'Природные текстуры', 'Загадочный силуэт'];
 const socialPictureWidth = 35;
 const socialPictureHeight = 35;
+const effects = {
+  'chrome':{
+    'name': 'grayscale',
+    'units': '',
+    'min': 0,
+    'max': 1,
+    'step': 0.1,
+  },
+  'sepia':{
+    'name': 'sepia',
+    'units': '',
+    'min': 0,
+    'max': 1,
+    'step': 0.1,
+  },
+  'marvin':{
+    'name': 'invert',
+    'units': '%',
+    'min': 0,
+    'max': 100,
+    'step': 1,
+  },
+  'phobos':{
+    'name': 'blur',
+    'units':'px',
+    'min': 0,
+    'max': 3,
+    'step': 0.1,
+  },
+  'heat':{
+    'name': 'brightness',
+    'units':'',
+    'min': 1,
+    'max': 3,
+    'step': 0.1,
+  },
+};
 
-export {messages, firstNames, lastNames, photoDescriptions, socialPictureWidth, socialPictureHeight};
+export {messages, firstNames, lastNames, photoDescriptions, socialPictureWidth, socialPictureHeight, effects};
