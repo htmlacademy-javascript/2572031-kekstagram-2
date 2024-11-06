@@ -60,6 +60,24 @@ const validateDescription = function(comment){
   return comment.length >= 0 && comment.length <= 140;
 };
 
+const uploadForm = function(){
+  const submitButton = document.querySelector('.img-upload__submit');
+  submitButton.disabled = true;
+  const formData = new FormData(form);
+  fetch('https://31.javascript.htmlacademy.pro/kekstagram',{
+    method: 'POST',
+    body: formData
+  })
+    .then(response => {
+      if (response.ok) {
+        pristine.reset();
+        uploadFormClose();
+      }
+    })
+    .catch(error => console.error('Error:', error))
+    .finally(() => {submitButton.disabled = false});
+};
+
 pristine.addValidator(hashTagInput,validateHashTag,'Недопустимый хэштег');
 pristine.addValidator(descriptionInput,validateDescription, 'Недопустимый комментарий');
 
@@ -80,8 +98,9 @@ document.addEventListener('keydown', (evt) => {
 });
 
 form.addEventListener('submit', (evt) => {
+  evt.preventDefault();
   const isValid = pristine.validate();
-  if (!isValid) {
-    evt.preventDefault();
+  if (isValid) {
+    uploadForm();
   }
 });
