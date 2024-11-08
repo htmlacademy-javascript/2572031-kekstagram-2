@@ -1,6 +1,8 @@
 import { scaleImage, hideEffects } from './edit-picture.js';
 const uploadButton = document.querySelector('.img-upload__input');
 const uploadOverlay = document.querySelector('.img-upload__overlay');
+const successTemplate  = document.querySelector('#success');
+const errorTemplate  = document.querySelector('#error');
 
 const form = document.querySelector('.img-upload__form');
 form.setAttribute('method', 'POST');
@@ -60,6 +62,43 @@ const validateDescription = function(comment){
   return comment.length >= 0 && comment.length <= 140;
 };
 
+const addTemplates = function(template){
+  const modal = template.content.cloneNode(true);
+  const section = modal.querySelector('section');
+  const btn = modal.querySelector('button')
+
+  const removeEventListeners = function(){
+    document.body.removeEventListener('keydown', keyDownRemove);
+    section.removeEventListener('click', clickRemove);
+    btn.removeEventListener('click', clickBtnRemove);
+  };
+  
+  const keyDownRemove = function(evt){
+    if (evt.key === 'Escape') {
+      section.remove();
+    }
+    removeEventListeners();
+  }
+  
+  const clickBtnRemove = function(){
+    section.remove();
+    removeEventListeners();
+  };
+
+  const clickRemove = function(evt){
+    if (evt.target === section){
+      section.remove();
+    }
+    removeEventListeners();
+  }
+
+  btn.addEventListener('click', clickBtnRemove);
+  document.body.addEventListener('keydown', keyDownRemove);
+  section.addEventListener('click', clickRemove);
+
+  document.body.appendChild(modal);
+}
+
 const uploadForm = function(){
   const submitButton = document.querySelector('.img-upload__submit');
   submitButton.disabled = true;
@@ -72,9 +111,12 @@ const uploadForm = function(){
       if (response.ok) {
         pristine.reset();
         uploadFormClose();
+        addTemplates(successTemplate);
+      } else {
+        addTemplates(errorTemplate)
       }
     })
-    .catch(error => console.error('Error:', error))
+    .catch(error => console.log(error))
     .finally(() => {submitButton.disabled = false});
 };
 
@@ -91,7 +133,7 @@ uploadFormCloseButton.addEventListener('click', () =>{
   uploadFormClose();
 });
 
-document.addEventListener('keydown', (evt) => {
+form.addEventListener('keydown', (evt) => {
   if (evt.key === 'Escape' && document.activeElement !== hashTagInput && document.activeElement !== descriptionInput){
     uploadFormClose();
   }
