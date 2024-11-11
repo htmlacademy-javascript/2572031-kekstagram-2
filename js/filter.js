@@ -27,19 +27,17 @@ const filterDefault = function (array) {
 }
 
 const filterRandom = function (array) {
-   return array.sort(() => Math.random() - 0.5);
+   return array.toSorted(() => Math.random() - 0.5);
 }
 
 const filterDiscussed = function (array) {
-   return array.sort((a, b) => b.comments.length - a.comments.length);
+   return array.toSorted((a, b) => b.comments.length - a.comments.length);
 }
 
 const applyFilter = function(data){
-   
-   const arrayCopy = Array.from(data);
 
    filterDefaultButton.addEventListener('click', () => {
-      renderPictures(filterDefault(arrayCopy));
+      renderPictures(filterDefault(data));
    });
    filterRandomButton.addEventListener('click', () => {
       renderPictures(filterRandom(data));
@@ -48,7 +46,7 @@ const applyFilter = function(data){
       renderPictures(filterDiscussed(data));
    });
 
-   renderPictures(filterDefault(arrayCopy));
+   renderPictures(filterDefault(data));
 }
 
 export {applyFilter}
