@@ -27,7 +27,7 @@ const filterDefault = function (array) {
 }
 
 const filterRandom = function (array) {
-   return array.toSorted(() => Math.random() - 0.5);
+   return array.toSorted(() => Math.random() - 0.5).slice(0,10);
 }
 
 const filterDiscussed = function (array) {
