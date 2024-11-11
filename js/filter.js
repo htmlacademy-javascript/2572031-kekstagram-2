@@ -35,9 +35,11 @@ const filterDiscussed = function (array) {
 }
 
 const applyFilter = function(data){
+   
+   const arrayCopy = Array.from(data);
 
    filterDefaultButton.addEventListener('click', () => {
-      renderPictures(filterDefault(data));
+      renderPictures(filterDefault(arrayCopy));
    });
    filterRandomButton.addEventListener('click', () => {
       renderPictures(filterRandom(data));
@@ -46,7 +48,7 @@ const applyFilter = function(data){
       renderPictures(filterDiscussed(data));
    });
 
-   renderPictures(filterDefault(data));
+   renderPictures(filterDefault(arrayCopy));
 }
 
 export {applyFilter}
