@@ -11,18 +11,6 @@ const filterDiscussedButton = document.querySelector('#filter-discussed');
 imgFilters.classList.remove('img-filters--inactive');
 
 let activeButton = filtersForm.querySelector('.img-filters__button--active');
-const applyFiltersHandler = function(target){
-   switch(target.id){
-      case 'filter-random':
-      renderPictures(filterRandom());
-      break;
-    case 'filter-discussed':
-      renderPictures(filterDiscussed());
-      break;
-    default:
-      renderPictures(filterDefault());
-   }
-};
 
 filterButtons.forEach((button) => {
    
