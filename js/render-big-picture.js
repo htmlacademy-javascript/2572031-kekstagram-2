@@ -5,6 +5,7 @@ const container = document.querySelector('.pictures');
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureImg = document.querySelector('.big-picture__img').children[0];
 const likesCount = document.querySelector('.likes-count');
+const description = document.querySelector('.social__caption');
 const cancelButton = document.querySelector('.big-picture__cancel');
 const commentTotalCount = document.querySelector('.social__comment-total-count');
 const commentShownCount = document.querySelector('.social__comment-shown-count');
@@ -51,6 +52,7 @@ const renderBigPicture = function(photosArray){
     if(evt.target.classList.value === 'picture__img'){
       const imgUrl = evt.target.getAttribute('src');
       const imageObject = findImage(photosArray, imgUrl);
+      description.textContent = imageObject.description;
       const commentsContainer = document.querySelector('.social__comments');
       const addCommentsFragment = addComments(imageObject.comments);
 

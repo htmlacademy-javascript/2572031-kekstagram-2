@@ -9,7 +9,8 @@ const form = document.querySelector('.img-upload__form');
 const scaleSmallerButton = document.querySelector('.scale__control--smaller');
 const scaleBiggerButton = document.querySelector('.scale__control--bigger');
 const scaleValue = document.querySelector('.scale__control--value');
-const picturePreview = form.querySelector('.img-upload__preview');
+const picturePreviewContainer = form.querySelector('.img-upload__preview');
+const picturePreview = picturePreviewContainer.childNodes[1];
 const effectValue = form.querySelector('.effect-level__value');
 const effectLevel = form.querySelector('.img-upload__effect-level');
 const effectLevelSlider = form.querySelector('.effect-level__slider');
@@ -51,7 +52,7 @@ noUiSlider.create(effectLevelSlider,{
   },
   step: 0.1,
   start: 0,
-  connect: true,
+  connect : 'lower',
   behaviour: 'tap-drag',
 });
 
@@ -63,6 +64,7 @@ effectButtons.forEach((target) => {
       hideEffects();
     } else {
       showEffects();
+      currentEffect = effects[type];
       effectLevelSlider.noUiSlider.updateOptions({
         range: {
           min: effects[type].min,
@@ -71,7 +73,7 @@ effectButtons.forEach((target) => {
         step: effects[type].step,
         start: effects[type].min,
       });
-      currentEffect = effects[type];
+
     }
   });
 });

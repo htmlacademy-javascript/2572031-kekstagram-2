@@ -1,6 +1,5 @@
 const pictureTemplate = document.querySelector('#picture').content;
 
-
 function makePicture(object){
   const picture = pictureTemplate.querySelector('.picture').cloneNode(true);
   const img = picture.querySelector('.picture__img');
@@ -16,6 +15,7 @@ function makePicture(object){
 function renderPictures(arr){
   const picturesContainer = document.querySelector('.pictures');
   const fragment = document.createDocumentFragment();
+  document.querySelectorAll('.picture').forEach((element) => element.remove());
 
   arr.forEach((obj) => fragment.appendChild(makePicture(obj)));
   picturesContainer.appendChild(fragment);
