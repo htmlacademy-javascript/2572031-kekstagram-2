@@ -1,4 +1,5 @@
 import { renderPictures } from "./render-pictures.js";
+import { debounce } from "./utils.js";
 
 const imgFilters = document.querySelector('.img-filters');
 const filtersForm = document.querySelector('.img-filters__form');
@@ -8,7 +9,7 @@ const filterDefaultButton = document.querySelector('#filter-default');
 const filterRandomButton = document.querySelector('#filter-random');
 const filterDiscussedButton = document.querySelector('#filter-discussed');
 
-imgFilters.classList.remove('img-filters--inactive');
+
 
 let activeButton = filtersForm.querySelector('.img-filters__button--active');
 
@@ -34,19 +35,21 @@ const filterDiscussed = function (array) {
    return array.toSorted((a, b) => b.comments.length - a.comments.length);
 }
 
-const applyFilter = function(data){
+const debounceRender = debounce(renderPictures);
 
+const applyFilter = function(data){
+   imgFilters.classList.remove('img-filters--inactive');
    filterDefaultButton.addEventListener('click', () => {
-      renderPictures(filterDefault(data));
+      debounceRender(filterDefault(data));
    });
    filterRandomButton.addEventListener('click', () => {
-      renderPictures(filterRandom(data));
+      debounceRender(filterRandom(data));
    });
    filterDiscussedButton.addEventListener('click', () => {
-      renderPictures(filterDiscussed(data));
+      debounceRender(filterDiscussed(data));
    });
 
-   renderPictures(filterDefault(data));
+   debounceRender(filterDefault(data));
 }
 
 export {applyFilter}

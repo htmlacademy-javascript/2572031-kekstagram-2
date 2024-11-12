@@ -4,10 +4,19 @@ const loadPhotos = function(){
     fetch('https://31.javascript.htmlacademy.pro/kekstagram/data')
      .then(response => response.json())
      .then((data)=>{
-        applyFilter(data);
-        renderBigPicture(data);
+         if (data){
+            applyFilter(data);
+            renderBigPicture(data);
+         }
      })
-     .catch(err => console.error('Error:', err))
+     .catch(() => {
+      const modal = document.querySelector('#data-error').content.cloneNode(true);
+      const section = modal.querySelector('section');
+      document.body.appendChild(modal);
+      setTimeout(() => {
+        section.remove();
+      }, 5000);
+     })
 };
 
 export {loadPhotos}

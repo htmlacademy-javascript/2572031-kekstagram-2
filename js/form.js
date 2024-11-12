@@ -1,4 +1,6 @@
 import { scaleImage, hideEffects } from './edit-picture.js';
+
+const FILE_TYPES = ['jpg', 'png', 'jpeg']
 const uploadButton = document.querySelector('.img-upload__input');
 const uploadOverlay = document.querySelector('.img-upload__overlay');
 const successTemplate  = document.querySelector('#success');
@@ -8,6 +10,7 @@ const form = document.querySelector('.img-upload__form');
 form.setAttribute('method', 'POST');
 form.setAttribute('enctype', 'multipart/form-data');
 form.setAttribute('action', 'https://31.javascript.htmlacademy.pro/kekstagram');
+const picturePreview = form.querySelector('.img-upload__preview').childNodes[1];
 
 const uploadFormCloseButton = document.querySelector('.img-upload__cancel');
 const hashTagInput = form.querySelector('.text__hashtags');
@@ -125,7 +128,16 @@ pristine.addValidator(descriptionInput,validateDescription, 'Недопусти�
 
 
 uploadButton.addEventListener('change', () => {
-  uploadFormOpen();
+  const file = uploadButton.files[0];
+  const fileName = file.name.toLowerCase();
+
+  const matches = FILE_TYPES.some((it)=> fileName.endsWith(it))
+
+  if (matches) {
+    picturePreview.src = URL.createObjectURL(file);
+    uploadFormOpen();
+  }
+  
 });
 
 uploadFormCloseButton.addEventListener('click', () =>{
@@ -146,3 +158,4 @@ form.addEventListener('submit', (evt) => {
     uploadForm();
   }
 });
+

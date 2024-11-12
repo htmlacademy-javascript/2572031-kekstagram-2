@@ -53,6 +53,7 @@ noUiSlider.create(effectLevelSlider,{
   step: 0.1,
   start: 0,
   connect: true,
+  connect : 'lower',
   behaviour: 'tap-drag',
 });
 
@@ -64,6 +65,7 @@ effectButtons.forEach((target) => {
       hideEffects();
     } else {
       showEffects();
+      currentEffect = effects[type];
       effectLevelSlider.noUiSlider.updateOptions({
         range: {
           min: effects[type].min,
@@ -72,7 +74,7 @@ effectButtons.forEach((target) => {
         step: effects[type].step,
         start: effects[type].min,
       });
-      currentEffect = effects[type];
+      
     }
   });
 });
