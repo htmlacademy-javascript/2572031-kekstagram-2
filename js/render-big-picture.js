@@ -52,7 +52,7 @@ const renderBigPicture = function(photosArray){
     if(evt.target.classList.value === 'picture__img'){
       const imgUrl = evt.target.getAttribute('src');
       const imageObject = findImage(photosArray, imgUrl);
-      description.textContent = imageObject.description
+      description.textContent = imageObject.description;
       const commentsContainer = document.querySelector('.social__comments');
       const addCommentsFragment = addComments(imageObject.comments);
 

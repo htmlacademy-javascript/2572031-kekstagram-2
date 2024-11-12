@@ -1,7 +1,5 @@
 const pictureTemplate = document.querySelector('#picture').content;
 
-
-
 function makePicture(object){
   const picture = pictureTemplate.querySelector('.picture').cloneNode(true);
   const img = picture.querySelector('.picture__img');
