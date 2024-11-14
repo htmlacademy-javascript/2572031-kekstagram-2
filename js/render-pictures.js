@@ -1,24 +1,24 @@
-const pictureTemplate = document.querySelector('#picture').content;
+const pictureTemplateElement = document.querySelector('#picture').content;
 
-function makePicture(object){
-  const picture = pictureTemplate.querySelector('.picture').cloneNode(true);
-  const img = picture.querySelector('.picture__img');
-  img.src = object.url;
-  img.alt = object.decription;
-  const likesAmount = picture.querySelector('.picture__likes');
-  likesAmount.textContent = object.likes;
-  const commentsAmount = picture.querySelector('.picture__comments');
-  commentsAmount.textContent = object.comments.length;
-  return picture;
-}
+const makePicture = (object) => {
+  const pictureElement = pictureTemplateElement.querySelector('.picture').cloneNode(true);
+  const imageElement = pictureElement.querySelector('.picture__img');
+  imageElement.src = object.url;
+  imageElement.alt = object.decription;
+  const likesAmountElement = pictureElement.querySelector('.picture__likes');
+  likesAmountElement.textContent = object.likes;
+  const commentsAmountElement = pictureElement.querySelector('.picture__comments');
+  commentsAmountElement.textContent = object.comments.length;
+  return pictureElement;
+};
 
-function renderPictures(arr){
-  const picturesContainer = document.querySelector('.pictures');
+const renderPictures = (arr) => {
+  const pictureElement = document.querySelector('.pictures');
   const fragment = document.createDocumentFragment();
   document.querySelectorAll('.picture').forEach((element) => element.remove());
 
   arr.forEach((obj) => fragment.appendChild(makePicture(obj)));
-  picturesContainer.appendChild(fragment);
-}
+  pictureElement.appendChild(fragment);
+};
 
 export {renderPictures};
