@@ -142,8 +142,6 @@ uploadFormCloseButton.addEventListener('click', () =>{
   uploadFormClose();
 });
 
-
-
 form.addEventListener('submit', (evt) => {
   evt.preventDefault();
   const isValid = pristine.validate();
