@@ -73,14 +73,12 @@ const addTemplates = function(template){
   const closeModal = function(evt){
     if (evt.target === section || evt.key === 'Escape' || evt.target === btn) {
       section.remove();
-      document.body.removeEventListener('keydown', closeModal);
       section.removeEventListener('click', closeModal);
       btn.removeEventListener('click', closeModal);
     }
   };
 
   btn.addEventListener('click', closeModal);
-  document.body.addEventListener('keydown', closeModal);
   section.addEventListener('click', closeModal);
 
   document.body.appendChild(modal);
@@ -90,7 +88,7 @@ const uploadForm = function(){
   const submitButton = document.querySelector('.img-upload__submit');
   submitButton.disabled = true;
   const formData = new FormData(form);
-  fetch('https://31.javascript.htmlacademy.pro/kekstagram',{
+  fetch('https://31.javascript.htmlacademy.pro/kekstagrams',{
     method: 'POST',
     body: formData
   })
@@ -114,15 +112,29 @@ pristine.addValidator(descriptionInput,validateDescription, 'Недопусти�
 
 uploadButton.addEventListener('change', () => {
   const file = uploadButton.files[0];
+  const effectsPreview = document.querySelectorAll('.effects__preview');
   const fileName = file.name.toLowerCase();
 
   const matches = FILE_TYPES.some((it)=> fileName.endsWith(it));
 
   if (matches) {
     picturePreview.src = URL.createObjectURL(file);
+    effectsPreview.forEach((effect) => {
+      effect.style.backgroundImage = `url(${URL.createObjectURL(file)})`;
+    });
     uploadFormOpen();
   }
 
+});
+
+document.addEventListener('keydown', (evt) => {
+  if (evt.key === 'Escape' && document.activeElement !== hashTagInput && document.activeElement !== descriptionInput){
+    if (document.querySelector('.error') !== null) {
+      document.querySelector('.error').remove();
+    } else {
+      uploadFormClose();
+    }
+  }
 });
 
 uploadFormCloseButton.addEventListener('click', () =>{
@@ -130,11 +142,7 @@ uploadFormCloseButton.addEventListener('click', () =>{
   uploadFormClose();
 });
 
-form.addEventListener('keydown', (evt) => {
-  if (evt.key === 'Escape' && document.activeElement !== hashTagInput && document.activeElement !== descriptionInput){
-    uploadFormClose();
-  }
-});
+
 
 form.addEventListener('submit', (evt) => {
   evt.preventDefault();
