@@ -71,7 +71,7 @@ effectButtonElements.forEach((target) => {
           max: EFFECTS[type].max,
         },
         step: EFFECTS[type].step,
-        start: EFFECTS[type].min,
+        start: EFFECTS[type].max,
       });
 
     }

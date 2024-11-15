@@ -25,6 +25,43 @@ const pristine = new Pristine(formElement, {
   errorTextClass: 'img-upload__field-wrapper--error'
 });
 
+const validateDescription = (comment) => comment.length >= 0 && comment.length <= 140;
+
+const formatHashtagString = (input) => {
+  const hashTagsArray = input.toLowerCase().split(' ');
+  const tags = hashTagsArray.filter((tag) => tag.length > 0);
+  return tags;
+};
+
+const validateHashTagLength = (input) => formatHashtagString(input).length <= 5;
+const validateHashTagFormat = (input) => {
+  let valid = true;
+  const hashTagRegex = /^#[a-zа-я0-9]{1,19}$/;
+  formatHashtagString(input).forEach((tag) => {
+    if (!hashTagRegex.test(tag)) {
+      valid = false;
+    }
+  });
+  return valid;
+};
+const validateHashTagUnique = (input) => {
+  let valid = true;
+  const usedTags = new Set();
+  formatHashtagString(input).forEach((tag) => {
+    if (usedTags.has(tag)) {
+      valid = false;
+    }else{
+      usedTags.add(tag);
+    }
+  });
+  return valid;
+};
+
+pristine.addValidator(hashTagInputElement,validateHashTagUnique,'Теги не должны повторяться',1, true);
+pristine.addValidator(hashTagInputElement,validateHashTagLength,'Не больше 5 тегов',3, true);
+pristine.addValidator(hashTagInputElement,validateHashTagFormat,'Неправильный формат тега',2,true);
+pristine.addValidator(descriptionInputElement,validateDescription, 'Длина комментария не больше 140 символов.');
+
 const uploadFormOpen = () => {
   uploadOverlayElement.classList.remove('hidden');
   document.body.classList.add('modal-open');
@@ -39,31 +76,6 @@ const uploadFormClose = () => {
   formElement.reset();
 };
 
-const validateHashTag = (input) => {
-  const hashTagsArray = input.toLowerCase().split(' ');
-  const hashTagRegex = /^#[a-zа-я0-9]{1,19}$/;
-  const usedTags = new Set();
-  let valid = true;
-
-  const tags = hashTagsArray.filter((tag) => tag.length > 0);
-
-  if (tags.length > 5) {
-    valid = false;
-  } else {
-    tags.forEach((tag) => {
-      if (!hashTagRegex.test(tag)) {
-        valid = false;
-      } else if (usedTags.has(tag)) {
-        valid = false;
-      } else {
-        usedTags.add(tag);
-      }
-    });
-  }
-  return valid;
-};
-
-const validateDescription = (comment) => comment.length >= 0 && comment.length <= 140;
 
 const addTemplates = (template) => {
   const modalElement = template.content.cloneNode(true);
@@ -105,9 +117,6 @@ const uploadForm = () =>{
       submitButtonElement.disabled = false;
     });
 };
-
-pristine.addValidator(hashTagInputElement,validateHashTag,'Недопустимый хэштег');
-pristine.addValidator(descriptionInputElement,validateDescription, 'Недопустимый комментарий');
 
 
 uploadButtonElement.addEventListener('change', () => {
