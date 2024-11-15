@@ -1,17 +1,6 @@
-const messages = [
-  'Всё отлично!',
-  'В целом всё неплохо. Но не всё.',
-  'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
-  'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
-  'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
-  'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?'
-];
-const firstNames = ['Антон', 'Василий', 'Петр', 'Кирилл', 'Илья', 'Станислав', 'Максим'];
-const lastNames = ['Иванов', 'Сидоров', 'Петров', 'Кузнецов', 'Семенов', 'Джаваскриптов'];
-const photoDescriptions = ['Космические линии', 'Игра света и тени', 'Цветовые пятна', 'Энергия движения', 'Сложные узоры', 'Необычные формы', 'Гармония цвета', 'Размытые контуры', 'Природные текстуры', 'Загадочный силуэт'];
-const socialPictureWidth = 35;
-const socialPictureHeight = 35;
-const effects = {
+const SOCIAL_PICTURE_WIDTH = 35;
+const SOCIAL_PICTURE_HEIGHT = 35;
+const EFFECTS = {
   'chrome':{
     'name': 'grayscale',
     'units': '',
@@ -49,4 +38,4 @@ const effects = {
   },
 };
 
-export {messages, firstNames, lastNames, photoDescriptions, socialPictureWidth, socialPictureHeight, effects};
+export {SOCIAL_PICTURE_WIDTH, SOCIAL_PICTURE_HEIGHT, EFFECTS};

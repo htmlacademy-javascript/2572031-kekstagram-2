@@ -1,96 +1,106 @@
 import { scaleImage, hideEffects } from './edit-picture.js';
 
 const FILE_TYPES = ['jpg', 'png', 'jpeg'];
-const uploadButton = document.querySelector('.img-upload__input');
-const uploadOverlay = document.querySelector('.img-upload__overlay');
-const successTemplate = document.querySelector('#success');
-const errorTemplate = document.querySelector('#error');
+const UPLOAD_URL = 'https://31.javascript.htmlacademy.pro/kekstagram';
 
-const form = document.querySelector('.img-upload__form');
-form.setAttribute('method', 'POST');
-form.setAttribute('enctype', 'multipart/form-data');
-form.setAttribute('action', 'https://31.javascript.htmlacademy.pro/kekstagram');
-const picturePreview = form.querySelector('.img-upload__preview').childNodes[1];
+const uploadButtonElement = document.querySelector('.img-upload__input');
+const uploadOverlayElement = document.querySelector('.img-upload__overlay');
+const successTemplateElement = document.querySelector('#success');
+const errorTemplateElement = document.querySelector('#error');
 
-const uploadFormCloseButton = document.querySelector('.img-upload__cancel');
-const hashTagInput = form.querySelector('.text__hashtags');
-const descriptionInput = form.querySelector('.text__description');
+const formElement = document.querySelector('.img-upload__form');
+formElement.setAttribute('method', 'POST');
+formElement.setAttribute('enctype', 'multipart/form-data');
+formElement.setAttribute('action', UPLOAD_URL);
+const picturePreviewElement = formElement.querySelector('.img-upload__preview').childNodes[1];
 
-const pristine = new Pristine(form, {
+const uploadFormCloseElement = document.querySelector('.img-upload__cancel');
+const hashTagInputElement = formElement.querySelector('.text__hashtags');
+const descriptionInputElement = formElement.querySelector('.text__description');
+
+const pristine = new Pristine(formElement, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
   errorTextTag: 'div',
   errorTextClass: 'img-upload__field-wrapper--error'
 });
 
-const uploadFormOpen = function () {
-  uploadOverlay.classList.remove('hidden');
-  document.body.classList.add('modal-open');
-};
+const validateDescription = (comment) => comment.length >= 0 && comment.length <= 140;
 
-const uploadFormClose = function () {
-  uploadOverlay.classList.add('hidden');
-  document.body.classList.remove('modal-open');
-  uploadButton.value = '';
-  scaleImage('default');
-  hideEffects();
-  form.reset();
-};
-
-const validateHashTag = function(input){
+const formatHashtagString = (input) => {
   const hashTagsArray = input.toLowerCase().split(' ');
-  const hashTagRegex = /^#[a-zа-я0-9]{1,19}$/;
-  const usedTags = new Set();
-  let valid = true;
-
   const tags = hashTagsArray.filter((tag) => tag.length > 0);
+  return tags;
+};
 
-  if (tags.length > 5) {
-    valid = false;
-  } else {
-    tags.forEach((tag) => {
-      if (!hashTagRegex.test(tag)) {
-        valid = false;
-      } else if (usedTags.has(tag)) {
-        valid = false;
-      } else {
-        usedTags.add(tag);
-      }
-    });
-  }
+const validateHashTagLength = (input) => formatHashtagString(input).length <= 5;
+const validateHashTagFormat = (input) => {
+  let valid = true;
+  const hashTagRegex = /^#[a-zа-я0-9]{1,19}$/;
+  formatHashtagString(input).forEach((tag) => {
+    if (!hashTagRegex.test(tag)) {
+      valid = false;
+    }
+  });
+  return valid;
+};
+const validateHashTagUnique = (input) => {
+  let valid = true;
+  const usedTags = new Set();
+  formatHashtagString(input).forEach((tag) => {
+    if (usedTags.has(tag)) {
+      valid = false;
+    }else{
+      usedTags.add(tag);
+    }
+  });
   return valid;
 };
 
-const validateDescription = function(comment){
-  return comment.length >= 0 && comment.length <= 140;
+pristine.addValidator(hashTagInputElement,validateHashTagUnique,'Теги не должны повторяться',1, true);
+pristine.addValidator(hashTagInputElement,validateHashTagLength,'Не больше 5 тегов',3, true);
+pristine.addValidator(hashTagInputElement,validateHashTagFormat,'Неправильный формат тега',2,true);
+pristine.addValidator(descriptionInputElement,validateDescription, 'Длина комментария не больше 140 символов.');
+
+const uploadFormOpen = () => {
+  uploadOverlayElement.classList.remove('hidden');
+  document.body.classList.add('modal-open');
 };
 
-const addTemplates = function(template){
-  const modal = template.content.cloneNode(true);
-  const section = modal.querySelector('section');
-  const btn = modal.querySelector('button');
+const uploadFormClose = () => {
+  uploadOverlayElement.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+  uploadButtonElement.value = '';
+  scaleImage('default');
+  hideEffects();
+  formElement.reset();
+};
 
-  const closeModal = function(evt){
-    if (evt.target === section || evt.key === 'Escape' || evt.target === btn) {
-      section.remove();
-      document.body.removeEventListener('keydown', closeModal);
-      section.removeEventListener('click', closeModal);
-      btn.removeEventListener('click', closeModal);
+
+const addTemplates = (template) => {
+  const modalElement = template.content.cloneNode(true);
+  const sectionElement = modalElement.querySelector('section');
+  const buttonElement = modalElement.querySelector('button');
+
+  const onModalClose = (evt) => {
+    if (evt.target === sectionElement || evt.key === 'Escape' || evt.target === buttonElement) {
+      sectionElement.remove();
+      sectionElement.removeEventListener('click', onModalClose);
+      buttonElement.removeEventListener('click', onModalClose);
     }
   };
 
-  btn.addEventListener('click', closeModal);
-  document.body.addEventListener('keydown', closeModal);
-  section.addEventListener('click', closeModal);
+  buttonElement.addEventListener('click', onModalClose);
+  sectionElement.addEventListener('click', onModalClose);
 
-  document.body.appendChild(modal);
+  document.body.appendChild(modalElement);
 };
 
-const uploadForm = function(){
-  const submitButton = document.querySelector('.img-upload__submit');
-  submitButton.disabled = true;
-  const formData = new FormData(form);
-  fetch('https://31.javascript.htmlacademy.pro/kekstagram',{
+const uploadForm = () =>{
+  const submitButtonElement = document.querySelector('.img-upload__submit');
+  submitButtonElement.disabled = true;
+  const formData = new FormData(formElement);
+  fetch(UPLOAD_URL,{
     method: 'POST',
     body: formData
   })
@@ -98,45 +108,52 @@ const uploadForm = function(){
       if (response.ok) {
         pristine.reset();
         uploadFormClose();
-        addTemplates(successTemplate);
+        addTemplates(successTemplateElement);
       } else {
-        addTemplates(errorTemplate);
+        addTemplates(errorTemplateElement);
       }
     })
     .finally(() => {
-      submitButton.disabled = false;
+      submitButtonElement.disabled = false;
     });
 };
 
-pristine.addValidator(hashTagInput,validateHashTag,'Недопустимый хэштег');
-pristine.addValidator(descriptionInput,validateDescription, 'Недопустимый комментарий');
 
-
-uploadButton.addEventListener('change', () => {
-  const file = uploadButton.files[0];
+uploadButtonElement.addEventListener('change', () => {
+  const file = uploadButtonElement.files[0];
+  const effectsPreviewElement = document.querySelectorAll('.effects__preview');
   const fileName = file.name.toLowerCase();
 
   const matches = FILE_TYPES.some((it)=> fileName.endsWith(it));
 
   if (matches) {
-    picturePreview.src = URL.createObjectURL(file);
+    picturePreviewElement.src = URL.createObjectURL(file);
+    effectsPreviewElement.forEach((effect) => {
+      effect.style.backgroundImage = `url(${URL.createObjectURL(file)})`;
+    });
     uploadFormOpen();
   }
 
 });
 
-uploadFormCloseButton.addEventListener('click', () =>{
+document.addEventListener('keydown', (evt) => {
+  if (evt.key === 'Escape' && document.activeElement !== hashTagInputElement && document.activeElement !== descriptionInputElement){
+    if (document.querySelector('.error') !== null) {
+      document.querySelector('.error').remove();
+    } else if (document.querySelector('.success') !== null) {
+      document.querySelector('.success').remove();
+    } else {
+      uploadFormClose();
+    }
+  }
+});
+
+uploadFormCloseElement.addEventListener('click', () =>{
   pristine.reset();
   uploadFormClose();
 });
 
-form.addEventListener('keydown', (evt) => {
-  if (evt.key === 'Escape' && document.activeElement !== hashTagInput && document.activeElement !== descriptionInput){
-    uploadFormClose();
-  }
-});
-
-form.addEventListener('submit', (evt) => {
+formElement.addEventListener('submit', (evt) => {
   evt.preventDefault();
   const isValid = pristine.validate();
   if (isValid) {

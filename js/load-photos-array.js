@@ -1,7 +1,8 @@
 import { applyFilter } from './filter.js';
 import { renderBigPicture } from './render-big-picture.js';
-const loadPhotos = function(){
-  fetch('https://31.javascript.htmlacademy.pro/kekstagram/data')
+const DATA_URL = 'https://31.javascript.htmlacademy.pro/kekstagram/data';
+const loadPhotos = () => {
+  fetch(DATA_URL)
     .then((response) => response.json())
     .then((data)=>{
       if (data){
@@ -10,11 +11,11 @@ const loadPhotos = function(){
       }
     })
     .catch(() => {
-      const modal = document.querySelector('#data-error').content.cloneNode(true);
-      const section = modal.querySelector('section');
-      document.body.appendChild(modal);
+      const modalElement = document.querySelector('#data-error').content.cloneNode(true);
+      const sectionElement = modalElement.querySelector('section');
+      document.body.appendChild(modalElement);
       setTimeout(() => {
-        section.remove();
+        sectionElement.remove();
       }, 5000);
     });
 };
