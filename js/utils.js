@@ -1,4 +1,4 @@
-const findImage = (arr, src) => arr.find((item) => item.url === src);
+const findImage = (images, src) => images.find((image) => image.url === src);
 
 const debounce = (callback, timeoutDelay = 500) => {
   let timeoutId;
