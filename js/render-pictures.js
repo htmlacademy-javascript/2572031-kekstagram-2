@@ -12,12 +12,12 @@ const makePicture = (object) => {
   return pictureElement;
 };
 
-const renderPictures = (arr) => {
+const renderPictures = (pictures) => {
   const pictureElement = document.querySelector('.pictures');
   const fragment = document.createDocumentFragment();
   document.querySelectorAll('.picture').forEach((element) => element.remove());
 
-  arr.forEach((obj) => fragment.appendChild(makePicture(obj)));
+  pictures.forEach((picture) => fragment.appendChild(makePicture(picture)));
   pictureElement.appendChild(fragment);
 };
 

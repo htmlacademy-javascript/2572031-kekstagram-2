@@ -21,11 +21,11 @@ filterButtonElements.forEach((button) => {
   });
 });
 
-const filterDefault = (array) => array;
+const filterDefault = (pictures) => pictures;
 
-const filterRandom = (array) => array.toSorted(() => Math.random() - 0.5).slice(0,10);
+const filterRandom = (pictures) => pictures.toSorted(() => Math.random() - 0.5).slice(0,10);
 
-const filterDiscussed = (array) => array.toSorted((a, b) => b.comments.length - a.comments.length);
+const filterDiscussed = (pictures) => pictures.toSorted((a, b) => b.comments.length - a.comments.length);
 
 const debounceRender = debounce(renderPictures);
 
