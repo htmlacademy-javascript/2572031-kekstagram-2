@@ -1,21 +1,3 @@
-const getRandomInteger = (a, b) => {
-  const lower = Math.ceil(Math.min(a, b));
-  const upper = Math.floor(Math.max(a, b));
-  const result = Math.random() * (upper - lower + 1) + lower;
-  return Math.floor(result);
-};
-
-const getRandomItem = (arr) => arr[getRandomInteger(0,arr.length - 1)];
-
-
-const getDistinctIndex = (arr) => {
-  const distinctIndices = new Set();
-  while (distinctIndices.size < arr.length) {
-    distinctIndices.add(getRandomInteger(0, arr.length - 1));
-  }
-  return Array.from(distinctIndices);
-};
-
 const findImage = (arr, src) => arr.find((item) => item.url === src);
 
 const debounce = (callback, timeoutDelay = 500) => {
@@ -36,4 +18,4 @@ const debounce = (callback, timeoutDelay = 500) => {
   };
 };
 
-export {getRandomInteger, getRandomItem, findImage, getDistinctIndex, debounce};
+export {findImage, debounce};
